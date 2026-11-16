@@ -11,3 +11,7 @@ def hello():
 @app.get("/healthy")
 def healthy():
     return {"status": "healthy"}
+
+@app.get("/hi")
+def hello():
+    return {"message": "hi!"}
