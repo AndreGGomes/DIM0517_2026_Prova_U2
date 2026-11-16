@@ -1,8 +1,13 @@
 name: Python
 
+on:
+  pull_request:
+    types: [closed]
+    branches: [develop]
 
 jobs:
   build:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -21,4 +26,9 @@ jobs:
 
       - name: Check
         run: python -m py_compile src/main.py
-
+      
+      - name: Criar tag em caso de sucesso
+        run: |
+          TAG="build-${{ github.run_id }}"
+          git tag "$TAG"
+          git push origin "$TAG"
